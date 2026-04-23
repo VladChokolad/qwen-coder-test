@@ -68,21 +68,202 @@ EcoSystemCore/
 | Vulture | Scavenger | 40 | 5.0 | Поедает мертвых, большое восприятие |
 | Beetle | Insect | 10 | 1.5 | Быстрое размножение, много потомков |
 
-## Сборка
+## Сборка и запуск
 
 ### Требования
 
-- CMake 3.20+
-- C++17 совместимый компилятор (GCC 8+, Clang 7+, MSVC 2019+)
+- **Операционная система**: Windows 10/11, Linux (Ubuntu 20.04+), macOS 11+
+- **CMake**: версия 3.20 или выше
+- **Компилятор C++17**:
+  - Windows: MSVC 2019 или новее (входит в Visual Studio 2019+)
+  - Linux: GCC 8+ или Clang 7+
+  - macOS: Apple Clang 12+ или GCC 8+
+- **Git**: для клонирования репозитория
 
-### Компиляция
+### Пошаговая инструкция запуска
+
+#### Шаг 1: Клонирование или подготовка проекта
+
+Убедитесь, что вы находитесь в директории проекта `EcoSystemCore`:
 
 ```bash
-mkdir build && cd build
+cd EcoSystemCore
+```
+
+#### Шаг 2: Создание директории сборки
+
+Создайте отдельную папку для файлов сборки (out-of-source build):
+
+```bash
+mkdir build
+cd build
+```
+
+#### Шаг 3: Конфигурация проекта через CMake
+
+Запустите CMake для генерации файлов сборки:
+
+**Для Linux/macOS:**
+```bash
 cmake ..
+```
+
+**Для Windows (Visual Studio 2019+):**
+```bash
+# Генерация решения Visual Studio
+cmake .. -G "Visual Studio 16 2019"
+# или для VS 2022
+cmake .. -G "Visual Studio 17 2022"
+```
+
+**Для Windows (MinGW):**
+```bash
+cmake .. -G "MinGW Makefiles"
+```
+
+**Опционально: указание типа сборки**
+```bash
+# Release сборка (оптимизированная)
+cmake .. -DCMAKE_BUILD_TYPE=Release
+
+# Debug сборка (с отладочной информацией)
+cmake .. -DCMAKE_BUILD_TYPE=Debug
+```
+
+#### Шаг 4: Компиляция проекта
+
+**Для Linux/macOS (Make):**
+```bash
 make -j$(nproc)
+```
+
+**Для Windows (Visual Studio):**
+```bash
+# Из директории build запустите:
+cmake --build . --config Release
+```
+
+**Для Windows (MinGW):**
+```bash
+mingw32-make -j4
+```
+
+#### Шаг 5: Запуск демонстрационной программы
+
+После успешной компиляции запустите исполняемый файл:
+
+**Для Linux/macOS:**
+```bash
 ./EcoSystemDemo
 ```
+
+**Для Windows:**
+```bash
+# Из директории build
+Release\EcoSystemDemo.exe
+# или
+.\Release\EcoSystemDemo.exe
+```
+
+### Полный алгоритм запуска (одной командой)
+
+**Linux/macOS:**
+```bash
+cd EcoSystemCore && \
+mkdir -p build && \
+cd build && \
+cmake .. -DCMAKE_BUILD_TYPE=Release && \
+make -j$(nproc) && \
+./EcoSystemDemo
+```
+
+**Windows (PowerShell):**
+```powershell
+cd EcoSystemCore; `
+mkdir -p build; `
+cd build; `
+cmake .. -DCMAKE_BUILD_TYPE=Release; `
+cmake --build . --config Release; `
+.\Release\EcoSystemDemo.exe
+```
+
+### Проверка успешности запуска
+
+При успешном запуске вы увидите:
+
+```
+========================================
+  EcoSystem Core Demo
+========================================
+World generated: 100x100
+Biomes: Grassland, Forest, Desert, Tundra, Mountain, Swamp, Rainforest, Savanna
+
+Spawning creatures...
+  - Rabbits: 50
+  - Wolves: 10
+  - Bears: 5
+  - Vultures: 3
+  - Beetles: 30
+
+Simulation started!
+Press: [P] Pause/Resume, [+] Speed Up, [-] Slow Down, [Q] Quit
+
+--- Tick 1 ---
+Population: 98
+  Herbivores: 80
+  Carnivores: 13
+  Omnivores: 5
+Events: 2 births, 0 deaths
+```
+
+### Управление в демо-приложении
+
+| Клавиша | Действие |
+|---------|----------|
+| `P` | Пауза / Продолжить симуляцию |
+| `+` / `=` | Ускорить время (x2, x4, x8...) |
+| `-` | Замедлить время |
+| `R` | Сбросить скорость времени к 1.0 |
+| `S` | Показать статистику |
+| `L` | Показать последние события |
+| `Q` | Выход из программы |
+
+### Возможные проблемы и решения
+
+#### Ошибка: "CMake not found"
+
+**Решение:** Установите CMake:
+- Ubuntu/Debian: `sudo apt-get install cmake`
+- Fedora: `sudo dnf install cmake`
+- macOS: `brew install cmake`
+- Windows: скачайте с [cmake.org](https://cmake.org/download/)
+
+#### Ошибка: "Compiler does not support C++17"
+
+**Решение:** Обновите компилятор:
+- Ubuntu: `sudo apt-get install g++-9` или новее
+- macOS: обновите Xcode Command Line Tools
+- Windows: установите Visual Studio 2019 или новее
+
+#### Ошибка: "Build directory not found"
+
+**Решение:** Убедитесь, что вы создали папку `build` и находитесь в ней перед запуском `cmake`.
+
+#### Ошибка при запуске: "Executable not found"
+
+**Решение:** Проверьте, что компиляция прошла успешно. Исполняемый файл находится в папке `build/` (Linux/macOS) или `build/Release/` (Windows).
+
+### Интеграция в свой проект
+
+Если вы хотите использовать EcoSystem Core как библиотеку:
+
+1. Добавьте `EcoSystemCore` как подмодуль или скопируйте исходники
+2. В вашем `CMakeLists.txt`:
+   ```cmake
+   add_subdirectory(EcoSystemCore)
+   target_link_libraries(YourProject EcoSystemCore)
+   ```
+3. Подключайте заголовки: `#include "Simulation.h"`
 
 ## Использование
 
