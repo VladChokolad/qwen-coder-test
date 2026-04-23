@@ -1,36 +1,36 @@
 ```
-# Compiled Python files
-*.pyc
-__pycache__/
-
-# Executable files
-main
-
-# Environment files
-.env
-.env.local
-*.env.*
-
-# Editor/IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
-
-# Logs
-*.log
-
 # Build artifacts
 *.o
 *.obj
+*.a
+*.lib
+*.so
+*.dll
+*.exe
 *.out
+
+# CMake build directory
 build/
-dist/
-target/
 
 # Dependencies
-node_modules/
-venv/
-.venv/
+vendor/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Editors
+.vscode/
+.idea/
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
+
+# Environment
+.env
+.env.local
+*.env.*
 ```
