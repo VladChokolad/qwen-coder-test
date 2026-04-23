@@ -1,28 +1,58 @@
-```
 # Build artifacts
-Binaries/
-Build/
-Saved/
-Intermediate/
-DerivedDataCache/
-Index/
-
-# Configuration
-.vscode/
-.idea/
-
-# Logs
+*.obj
 *.log
-Saved/Logs/
+*.tmp
+*.swp
+*.swo
+
+# Dependencies
+node_modules/
+.venv/
+venv/
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+target/
+.gradle/
 
 # Environment
 .env
 .env.local
 *.env.*
 
-# Dependencies
-node_modules/
-vendor/
-External/
-Plugins/
-```
+# Editors
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
