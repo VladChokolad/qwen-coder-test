@@ -1,34 +1,28 @@
 ```
-# Compiled and build artifacts
-*.o
-*.obj
-*.out
+# Build artifacts
+Binaries/
+Build/
+Saved/
+Intermediate/
+DerivedDataCache/
+Index/
 
-# Dependencies
-__pycache__/
-*.pyc
+# Configuration
+.vscode/
+.idea/
 
-# Logs and temp files
+# Logs
 *.log
-*.tmp
-*.swp
+Saved/Logs/
 
 # Environment
 .env
 .env.local
 *.env.*
 
-# Editors
-.vscode/
-.idea/
-
-# Coverage
-.coverage
-coverage/
-htmlcov/
-
-# Distribution / packaging
-dist/
-build/
-*.egg-info/
+# Dependencies
+node_modules/
+vendor/
+External/
+Plugins/
 ```
